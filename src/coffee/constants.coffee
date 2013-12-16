@@ -6,3 +6,4 @@ define [], ->
       DOWN: 40
       ENTER: 13
       TAB: 9
+      ESC: 27

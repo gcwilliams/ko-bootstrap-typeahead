@@ -7,6 +7,8 @@ define ["arrayFilter"], (arrayFilter) ->
   service =
     query: (term) ->
       $.Deferred (def) ->
-        results = arrayFilter(startsWith(term)).all ["One", "Two", "Three"]
-        def.resolve results
+        results = ->
+          results = arrayFilter(startsWith(term)).all ["Los Angeles", "Las Vegas", "New York", "Orlando", "Miami"]
+          def.resolve results
+        setTimeout results, Math.floor Math.random() * 1000
     

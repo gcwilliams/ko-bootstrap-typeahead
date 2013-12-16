@@ -11,14 +11,15 @@
   </head>
   <body>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Search" data-bind="
+      <input type="text" class="form-control" placeholder="Search" tabindex="-1" data-bind="
         value: item().name,
         dropdown: {
           suggestions: items,
           query: query,
           select: select,
           previous: selectPrevious,
-          next: selectNext
+          next: selectNext,
+          hover: hover
         }">
     </div>
   </body>

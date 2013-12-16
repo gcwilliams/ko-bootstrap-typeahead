@@ -25,9 +25,11 @@ require \
     next = (item) ->
       found = false
       (i) ->
-        if i is item
+        if i is item 
           found = true
-        found
+          false
+        else
+          found
     previous = (item) ->
       found = true
       (i) ->
@@ -40,12 +42,13 @@ require \
       item: ko.observable(new ListItem)
       items: ko.observableArray([])
       query: (term) ->
-        loading = true
+        model.loading true
+        model.items []
         service.query(term).done (data) ->
           items =[]
           $.each data, (_, datum) ->
             items.push new ListItem datum
-          loading = false
+          model.loading false
           model.items items
       select: (selected) ->
         model.item selected
@@ -53,14 +56,14 @@ require \
         items = model.items()
 
         if items.length
-          selected = arrayFilter(isSelected).first items
-          previous = arrayFilter(previous(selected)).last items
+          selectedItem = arrayFilter(isSelected).first items
+          previousItem = arrayFilter(previous(selectedItem)).last items
 
-          if selected
-            selected.isSelected false
-          if previous
-            previous.isSelected true
-          if not previous
+          if selectedItem
+            selectedItem.isSelected false
+          if previousItem
+            previousItem.isSelected true
+          if not previousItem
             items[items.length - 1].isSelected true
 
         model.items items
@@ -68,15 +71,27 @@ require \
         items = model.items()
 
         if items.length
-          selected = arrayFilter(isSelected).first items
-          previous = arrayFilter(next(selected)).first items
+          selectedItem = arrayFilter(isSelected).first items
+          nextItem = arrayFilter(next(selectedItem)).first items
 
-          if selected
-            selected.isSelected false
-          if previous
-            previous.isSelected true
-          if not previous
+          if selectedItem
+            selectedItem.isSelected false
+          if nextItem
+            nextItem.isSelected true
+          if not nextItem
             items[0].isSelected true
+
+        model.items items
+
+      hover: (item) ->
+        items = model.items()
+
+        if items.length
+          selectedItem = arrayFilter(isSelected).first items
+          if selectedItem
+            selectedItem.isSelected false
+          item.isSelected true
+          console.log item.name()
 
         model.items items
 

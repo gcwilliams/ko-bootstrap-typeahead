@@ -35,6 +35,13 @@ define \
           if not open
             openTypeAhead()
 
+        $(element).on "click", ->
+          if not open
+            openTypeAhead()
+
+
+        throttleTimeout = null;
+
         $(element).on "keyup", (e) ->
           e.preventDefault()
           e.stopPropagation()
@@ -54,16 +61,28 @@ define \
                 if $selected.length
                   config.select ko.dataFor $selected.get 0
                   disposer()
-            else
+            when constants.Keys.ESC
               if open
-                config.query($(element).val())
-              else
+                disposer()
+            else
+              if not open
                 openTypeAhead()
+              clearTimeout throttleTimeout
+              throttleTimeout = setTimeout (-> config.query($(element).val())), 500
 
-        $(".dropdown-menu", $parent).on "click", (e) ->
+        $menu = $("#menu", $parent)
+
+        $menu.on "click", (e) ->
           e.preventDefault()
           e.stopPropagation()
           config.select ko.dataFor e.toElement
           disposer()
+
+        $menu.on "mouseover", (e) ->
+          e.preventDefault()
+          data = ko.dataFor e.toElement
+          console.log data
+          if data isnt bindingContext.$data
+            config.hover data
 
       update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
