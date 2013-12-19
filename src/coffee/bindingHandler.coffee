@@ -1,3 +1,6 @@
+define "jquery", -> $
+define "ko", -> ko
+
 define \
   [
     "jquery",

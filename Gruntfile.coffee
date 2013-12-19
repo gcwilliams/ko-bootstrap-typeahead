@@ -9,7 +9,6 @@ module.exports = (grunt) ->
       release:
         ["dist/js/*.js", "!dist/js/bootstrap-typeahead.js", "dist/css/*.css", "!dist/css/bootstrap-typeahead.css", "dist/templates/**", "dist/lib/**"]
 
-
     coffee:
       options:
         bare: true
@@ -19,6 +18,10 @@ module.exports = (grunt) ->
           "dist/js/constants.js": "src/coffee/constants.coffee"
           "dist/js/bindingHandler.js": "src/coffee/bindingHandler.coffee"
           "dist/js/dummyService.js": "src/coffee/dummyService.coffee"
+      release:
+        files:
+          "dist/js/constants.js": "src/coffee/constants.coffee"
+          "dist/js/bindingHandler.js": "src/coffee/bindingHandler.coffee"
 
     copy:
       dev:
@@ -42,13 +45,10 @@ module.exports = (grunt) ->
       release:
         options:
           baseUrl: "dist/js/"
-          name: "app"
-          optimize: "none"
+          name: "bindingHandler"
+          optimize: "uglify"
           out: "dist/js/bootstrap-typeahead.js"
-          include: [
-            "bindingHandler"
-            "constants"
-          ]
+          stubModules: ["../lib/text"]
 
     watch:
       options:
@@ -63,4 +63,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-requirejs"
 
   grunt.registerTask "dev", ["clean:default", "coffee:dev", "copy:dev", "copy:common"]
-  grunt.registerTask "default", ["clean:default", "coffee:dev", "copy:common", "requirejs:release", "clean:release"]
+  grunt.registerTask "default", ["clean:default", "coffee:release", "copy:common", "requirejs:release", "clean:release"]
