@@ -13,11 +13,11 @@ define \
 
         config = valueAccessor()
 
-        open = false;
-        disposer = ->
+        open = false
 
-        $parent = $(element).parent()
-        $parent.append $(template)
+        throttleTimeout = null
+
+        disposer = ->
 
         openTypeAhead = ->
           open = true
@@ -31,33 +31,40 @@ define \
 
           config.query($(element).val())
 
-        $(element).on "focus", ->
+        onFocus = ->
           if not open
             openTypeAhead()
 
-        $(element).on "click", ->
+        onClick = ->
           if not open
             openTypeAhead()
 
-
-        throttleTimeout = null;
-
-        $(element).on "keyup", (e) ->
+        cancelEvent = (e) ->
           e.preventDefault()
           e.stopPropagation()
-          
+
+        onKeyUp = (e) ->
+          cancelEvent e
           switch e.keyCode
             when constants.Keys.UP
               if open 
-                config.previous()
+                $selected = $ "li.selected", $parent
+                if $selected.length
+                  $selected.removeClass("selected").prev("li").addClass("selected")
+                else
+                  $("li", $parent).last().addClass "selected"
             when constants.Keys.DOWN
               if open
-                config.next()
+                $selected = $ "li.selected", $parent
+                if $selected.length
+                  $selected.removeClass("selected").next("li").addClass("selected")
+                else
+                  $("li", $parent).first().addClass "selected"
               else
                 openTypeAhead()
-            when constants.Keys.ENTER, constants.Keys.TAB
+            when constants.Keys.ENTER
               if open
-                $selected = $("a.selected", $parent)
+                $selected = $ "li.selected > a", $parent
                 if $selected.length
                   config.select ko.dataFor $selected.get 0
                   disposer()
@@ -68,21 +75,39 @@ define \
               if not open
                 openTypeAhead()
               clearTimeout throttleTimeout
-              throttleTimeout = setTimeout (-> config.query($(element).val())), 500
+              throttleTimeout = setTimeout (-> config.query($(element).val())), 300
 
-        $menu = $("#menu", $parent)
-
-        $menu.on "click", (e) ->
-          e.preventDefault()
-          e.stopPropagation()
+        onClickItem = (e) ->
+          cancelEvent e
           config.select ko.dataFor e.toElement
           disposer()
 
-        $menu.on "mouseover", (e) ->
-          e.preventDefault()
+        onMouseOverItem = (e) ->
+          cancelEvent e
           data = ko.dataFor e.toElement
-          console.log data
           if data isnt bindingContext.$data
-            config.hover data
+            $("li", $parent).removeClass "selected"
+            $(e.toElement).parent().addClass "selected"
+
+        # cache element and parent
+        $el = $ element
+        $parent = $el.parent()
+        $parent.append $ template
+        $menu = $ "#menu", $parent
+
+        # hook up events
+        $el.bind "focus", onFocus
+        $el.bind "click", onClick
+        $el.bind "keyup", onKeyUp
+        $menu.bind "click", onClickItem
+        $menu.bind "mouseover", onMouseOverItem
+
+        # hook up disposal
+        ko.utils.domNodeDisposal.addDisposeCallback element, ->
+          $el.unbind onFocus
+          $el.unbind onClick
+          $el.unbind onKeyUp
+          $menu.unbind onClickItem
+          $menu.unbind onMouseOverItem
 
       update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
