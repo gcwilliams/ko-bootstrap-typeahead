@@ -13,7 +13,6 @@ module.exports = (grunt) ->
           "dist/js/app.js": "src/coffee/app.coffee"
           "dist/js/constants.js": "src/coffee/constants.coffee"
           "dist/js/bindingHandler.js": "src/coffee/bindingHandler.coffee"
-          "dist/js/arrayFilter.js": "src/coffee/arrayFilter.coffee"
           "dist/js/dummyService.js": "src/coffee/dummyService.coffee"
 
     copy:
