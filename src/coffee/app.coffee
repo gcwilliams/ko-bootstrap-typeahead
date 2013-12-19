@@ -1,10 +1,6 @@
 define "jquery", -> $
 define "ko", -> ko
 
-require.config
-  paths:
-    "text": "../lib/text"
-
 require \
   [
     "ko",

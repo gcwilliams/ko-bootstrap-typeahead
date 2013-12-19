@@ -3,7 +3,7 @@ define \
     "jquery",
     "ko",
     "closeHandler",
-    "text!../templates/dropdown.html",
+    "../lib/text!../templates/dropdown.html",
     "constants"
   ], ($, ko, closeHandler, template, constants) ->
 

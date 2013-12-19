@@ -3,7 +3,12 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON "package.json"
     
-    clean: ["dist/"]
+    clean:
+      default:
+        ["dist/"]
+      release:
+        ["dist/js/*.js", "!dist/js/bootstrap-typeahead.js", "dist/css/*.css", "!dist/css/bootstrap-typeahead.css", "dist/templates/**", "dist/lib/**"]
+
 
     coffee:
       options:
@@ -18,10 +23,13 @@ module.exports = (grunt) ->
     copy:
       dev:
         files: [
+          { expand: true, flatten: true, cwd: "src/", src: "host.html", dest: "dist/" }
+        ]
+      common:
+        files: [
           { expand: true, flatten: true, cwd: "src/", src: "js/**.js", dest: "dist/js" }
           { expand: true, flatten: true, cwd: "src/", src: "css/**.css", dest: "dist/css" }
           { expand: true, flatten: true, cwd: "src/", src: "templates/**.html", dest: "dist/templates" }
-          { expand: true, flatten: true, cwd: "src/", src: "host.html", dest: "dist/" }
           { expand: true, flatten: true, cwd: "src/", src: "css/bootstrap.css", dest: "dist/css/" }
           { expand: true, flatten: true, cwd: "src/", src: "css/bootstrap-theme.css", dest: "dist/css/" }
           { expand: true, flatten: true, cwd: "src/", src: "lib/require.js", dest: "dist/lib/" }
@@ -29,6 +37,18 @@ module.exports = (grunt) ->
           { expand: true, flatten: true, cwd: "src/", src: "lib/knockout.debug.js", dest: "dist/lib/" }
           { expand: true, flatten: true, cwd: "src/", src: "lib/jquery.js", dest: "dist/lib/" }
         ]
+
+    requirejs:
+      release:
+        options:
+          baseUrl: "dist/js/"
+          name: "app"
+          optimize: "none"
+          out: "dist/js/bootstrap-typeahead.js"
+          include: [
+            "bindingHandler"
+            "constants"
+          ]
 
     watch:
       options:
@@ -40,5 +60,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-copy"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-watch"
+  grunt.loadNpmTasks "grunt-contrib-requirejs"
 
-  grunt.registerTask "default", ["clean", "coffee:dev", "copy:dev"]
+  grunt.registerTask "dev", ["clean:default", "coffee:dev", "copy:dev", "copy:common"]
+  grunt.registerTask "default", ["clean:default", "coffee:dev", "copy:common", "requirejs:release", "clean:release"]
