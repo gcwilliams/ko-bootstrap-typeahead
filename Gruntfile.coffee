@@ -21,14 +21,14 @@ module.exports = (grunt) ->
         files: [
           { expand: true, flatten: true, cwd: "src/", src: "js/**.js", dest: "dist/js" }
           { expand: true, flatten: true, cwd: "src/", src: "css/**.css", dest: "dist/css" }
-          { expand: true, flatten: true, cwd: "src/", src: ["templates/**.html"], dest: "dist/templates" }
-          { expand: true, flatten: true, cwd: "src/", src: ["host.html"], dest: "dist/" }
-          { expand: true, flatten: true, cwd: "bower_components/", src: ["bootstrap/dist/css/bootstrap.css"], dest: "dist/css/" }
-          { expand: true, flatten: true, cwd: "bower_components/", src: ["bootstrap/dist/css/bootstrap-theme.css"], dest: "dist/css/" }
-          { expand: true, flatten: true, cwd: "bower_components/", src: ["requirejs/require.js"], dest: "dist/lib/" }
-          { expand: true, flatten: true, cwd: "bower_components/", src: ["requirejs-text/text.js"], dest: "dist/lib/" }
-          { expand: true, flatten: true, cwd: "bower_components/", src: "knockout.js/knockout.debug.js", dest: "dist/lib/" }
-          { expand: true, flatten: true, cwd: "bower_components/", src: "jquery/jquery.js", dest: "dist/lib/" }
+          { expand: true, flatten: true, cwd: "src/", src: "templates/**.html", dest: "dist/templates" }
+          { expand: true, flatten: true, cwd: "src/", src: "host.html", dest: "dist/" }
+          { expand: true, flatten: true, cwd: "src/", src: "css/bootstrap.css", dest: "dist/css/" }
+          { expand: true, flatten: true, cwd: "src/", src: "css/bootstrap-theme.css", dest: "dist/css/" }
+          { expand: true, flatten: true, cwd: "src/", src: "lib/require.js", dest: "dist/lib/" }
+          { expand: true, flatten: true, cwd: "src/", src: "lib/text.js", dest: "dist/lib/" }
+          { expand: true, flatten: true, cwd: "src/", src: "lib/knockout.debug.js", dest: "dist/lib/" }
+          { expand: true, flatten: true, cwd: "src/", src: "lib/jquery.js", dest: "dist/lib/" }
         ]
 
     watch:
