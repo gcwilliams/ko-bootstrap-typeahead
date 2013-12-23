@@ -15,9 +15,8 @@ Knockout binding
 
 ```
 data-bind="
-  value: item().name, // the observable bound to the selected value
+  value: suggestions().name, // the observable bound to the selected value
    dropdown: {
-    suggestions: items, // the list of suggestions in the model
     query: query, // the function called to get more data
     select: select // the function called when an item is selected
   }"
@@ -29,18 +28,18 @@ Knockout model
 ```
 var model = {
     loading: ko.observable(false), // true to show 'Loading...'
-    item: ko.observable(""), // the selected item
-    items: ko.observableArray([]), // the selections available
+    suggestion: ko.observable(""), // the selected suggestion
+    suggestions: ko.observableArray([]), // the selections available
     query: function(term) { // the function called to get more data
       model.loading(true);
       service.query(term).then(function(data) {
         model.loading(false);
-        model.items(data);
+        model.suggestions(data);
       });
     },
-    select: function(selected) { // the function called when an item is selected
-      model.items([]);
-      model.item(selected);
+    select: function(selected) { // the function called when a suggestion is selected
+      model.suggestions([]);
+      model.suggestion(selected);
     }
   };
 ```
