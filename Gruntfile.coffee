@@ -32,8 +32,10 @@ module.exports = (grunt) ->
         ]
       release:
         files: [
-          { expand: true, cwd: "dist/", src: "js/ko-bootstrap-typeahead.js", dest: "release/" }
-          { expand: true, cwd: "dist/", src: "css/ko-bootstrap-typeahead.css", dest: "release/" }
+          { expand: true, cwd: "dist/", src: "js/ko-bootstrap-typeahead.js", dest: "release" }
+          { expand: true, cwd: "dist/", src: "css/ko-bootstrap-typeahead.css", dest: "release" }
+          { expand: true, flatten: true, cwd: "dist/", src: "js/ko-bootstrap-typeahead.js", dest: "example/lib" }
+          { expand: true, cwd: "dist/", src: "css/ko-bootstrap-typeahead.css", dest: "example" }
         ]
       common:
         files: [

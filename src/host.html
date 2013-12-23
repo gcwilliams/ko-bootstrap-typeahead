@@ -4,7 +4,7 @@
     <title>TypeAhead Host Page</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-typeahead.css">
+    <link rel="stylesheet" type="text/css" href="css/ko-bootstrap-typeahead.css">
     <script type="text/javascript" src="lib/jquery.js"></script>
     <script type="text/javascript" src="lib/knockout.debug.js"></script>
     <script type="text/javascript" src="lib/require.js" data-main="js/app.js"></script>
@@ -12,9 +12,8 @@
   <body>
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Search" tabindex="-1" data-bind="
-        value: item().name,
+        value: suggestion().name,
         dropdown: {
-          suggestions: items,
           query: query,
           select: select
         }">

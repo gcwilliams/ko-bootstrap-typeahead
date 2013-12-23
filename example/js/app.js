@@ -38,18 +38,18 @@ $(function() {
 
   model = {
     loading: ko.observable(false), // true to show 'Loading...'
-    item: ko.observable(""), // the selected item
-    items: ko.observableArray([]), // the selections available
+    suggestion: ko.observable(""), // the selected suggestion
+    suggestions: ko.observableArray([]), // the selections available
     query: function(term) { // called to query for the data and to update the suggestions
       model.loading(true);
       service.query(term).then(function(data) {
         model.loading(false);
-        model.items(data);
+        model.suggestions(data);
       });
     },
-    select: function(selected) { // called when an item is selected
-      model.items([]);
-      model.item(selected);
+    select: function(selected) { // called when an suggestion is selected
+      model.suggestions([]);
+      model.suggestion(selected);
     }
   };
 

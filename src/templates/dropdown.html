@@ -3,13 +3,13 @@
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Loading...</a></li>
   </ul>
 </div>
-<div class="dropdown" data-bind="if: (items().length == 0 &amp;&amp; !loading())">
+<div class="dropdown" data-bind="if: (suggestions().length == 0 &amp;&amp; !loading())">
   <ul class="dropdown-menu" role="menu">
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">No matches found...</a></li>
   </ul>
 </div>
-<div id="menu" class="dropdown" data-bind="if: items().length">
-  <ul class="dropdown-menu" role="menu" data-bind="foreach: items">
+<div id="menu" class="dropdown" data-bind="if: suggestions().length">
+  <ul class="dropdown-menu" role="menu" data-bind="foreach: suggestions">
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-bind="text: name"></a></li>
   </ul>
 </div>

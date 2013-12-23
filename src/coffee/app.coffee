@@ -11,15 +11,15 @@ require \
 
     model =
       loading: ko.observable false
-      item: ko.observable {}
-      items: ko.observableArray []
+      suggestion: ko.observable {}
+      suggestions: ko.observableArray []
       query: (term) ->
         model.loading true
         service.query(term).done (data) ->
           model.loading false
-          model.items data
+          model.suggestions data
       select: (selected) ->
-        model.items []
-        model.item selected
+        model.suggestions []
+        model.suggestion selected
 
     ko.applyBindings model
