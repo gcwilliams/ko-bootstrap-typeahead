@@ -6,15 +6,6 @@ module.exports = (grunt) ->
     clean:
       default:
         ["dist/"]
-      release: [
-          "dist/js/*.js",
-          "!dist/js/bootstrap-typeahead.js",
-          "dist/css/*.css",
-          "!dist/css/bootstrap-typeahead.css",
-          "dist/templates/**",
-          "dist/lib/**",
-          "dist/frag/**"
-        ]
 
     coffee:
       options:
@@ -35,9 +26,14 @@ module.exports = (grunt) ->
         files: [
           { expand: true, flatten: true, cwd: "src/", src: "host.html", dest: "dist/" }
         ]
-      release:
+      build:
         files: [
           { expand: true, flatten: true, cwd: "src/", src: "frag/**.js", dest: "dist/frag/" }
+        ]
+      release:
+        files: [
+          { expand: true, cwd: "dist/", src: "js/ko-bootstrap-typeahead.js", dest: "release/" }
+          { expand: true, cwd: "dist/", src: "css/ko-bootstrap-typeahead.css", dest: "release/" }
         ]
       common:
         files: [
@@ -54,13 +50,13 @@ module.exports = (grunt) ->
         ]
 
     requirejs:
-      release:
+      build:
         options:
           baseUrl: "dist/js/"
           name: "../lib/almond"
           include: ["bindingHandler"]
           optimize: "uglify"
-          out: "dist/js/bootstrap-typeahead.js"
+          out: "dist/js/ko-bootstrap-typeahead.js"
           stubModules: ["../lib/text"]
           wrap:
             startFile: "dist/frag/start.js"
@@ -78,5 +74,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-requirejs"
 
-  grunt.registerTask "dev", ["clean:default", "coffee:dev", "copy:dev", "copy:common"]
-  grunt.registerTask "default", ["clean:default", "coffee:release", "copy:common", "copy:release", "requirejs:release", "clean:release"]
+  grunt.registerTask "dev", ["clean", "coffee:dev", "copy:dev", "copy:common"]
+  grunt.registerTask "default", ["clean", "coffee:release", "copy:common", "copy:build", "requirejs:build", "copy:release", "clean"]

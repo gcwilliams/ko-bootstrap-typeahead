@@ -46,6 +46,16 @@ define \
           e.preventDefault()
           e.stopPropagation()
 
+        onKeyPress = (e) ->
+          switch e.keyCode
+            when constants.Keys.ENTER
+              e.preventDefault()
+
+        onKeyDown = (e) ->
+          switch e.keyCode
+            when constants.Keys.ENTER
+              e.preventDefault()
+
         onKeyUp = (e) ->
           cancelEvent e
           switch e.keyCode
@@ -102,6 +112,8 @@ define \
         $el.bind "focus", onFocus
         $el.bind "click", onClick
         $el.bind "keyup", onKeyUp
+        $el.bind "keypress", onKeyPress
+        $el.bind "keydown", onKeyDown
         $menu.bind "click", onClickItem
         $menu.bind "mouseover", onMouseOverItem
 
@@ -110,6 +122,8 @@ define \
           $el.unbind onFocus
           $el.unbind onClick
           $el.unbind onKeyUp
+          $el.unbind onKeyPress
+          $el.unbind onKeyDown
           $menu.unbind onClickItem
           $menu.unbind onMouseOverItem
 
