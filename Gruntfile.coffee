@@ -6,8 +6,15 @@ module.exports = (grunt) ->
     clean:
       default:
         ["dist/"]
-      release:
-        ["dist/js/*.js", "!dist/js/bootstrap-typeahead.js", "dist/css/*.css", "!dist/css/bootstrap-typeahead.css", "dist/templates/**", "dist/lib/**"]
+      release: [
+          "dist/js/*.js",
+          "!dist/js/bootstrap-typeahead.js",
+          "dist/css/*.css",
+          "!dist/css/bootstrap-typeahead.css",
+          "dist/templates/**",
+          "dist/lib/**",
+          "dist/frag/**"
+        ]
 
     coffee:
       options:
@@ -28,6 +35,10 @@ module.exports = (grunt) ->
         files: [
           { expand: true, flatten: true, cwd: "src/", src: "host.html", dest: "dist/" }
         ]
+      release:
+        files: [
+          { expand: true, flatten: true, cwd: "src/", src: "frag/**.js", dest: "dist/frag/" }
+        ]
       common:
         files: [
           { expand: true, flatten: true, cwd: "src/", src: "js/**.js", dest: "dist/js" }
@@ -39,16 +50,21 @@ module.exports = (grunt) ->
           { expand: true, flatten: true, cwd: "src/", src: "lib/text.js", dest: "dist/lib/" }
           { expand: true, flatten: true, cwd: "src/", src: "lib/knockout.debug.js", dest: "dist/lib/" }
           { expand: true, flatten: true, cwd: "src/", src: "lib/jquery.js", dest: "dist/lib/" }
+          { expand: true, flatten: true, cwd: "src/", src: "lib/almond.js", dest: "dist/lib/" }
         ]
 
     requirejs:
       release:
         options:
           baseUrl: "dist/js/"
-          name: "bindingHandler"
+          name: "../lib/almond"
+          include: ["bindingHandler"]
           optimize: "uglify"
           out: "dist/js/bootstrap-typeahead.js"
           stubModules: ["../lib/text"]
+          wrap:
+            startFile: "dist/frag/start.js"
+            endFile: "dist/frag/end.js"
 
     watch:
       options:
@@ -63,4 +79,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-requirejs"
 
   grunt.registerTask "dev", ["clean:default", "coffee:dev", "copy:dev", "copy:common"]
-  grunt.registerTask "default", ["clean:default", "coffee:release", "copy:common", "requirejs:release", "clean:release"]
+  grunt.registerTask "default", ["clean:default", "coffee:release", "copy:common", "copy:release", "requirejs:release", "clean:release"]

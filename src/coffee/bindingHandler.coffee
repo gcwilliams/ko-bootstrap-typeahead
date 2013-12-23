@@ -78,7 +78,7 @@ define \
               if not open
                 openTypeAhead()
               clearTimeout throttleTimeout
-              throttleTimeout = setTimeout (-> config.query($(element).val())), 300
+              throttleTimeout = setTimeout (-> config.query($(element).val())), 200
 
         onClickItem = (e) ->
           cancelEvent e
