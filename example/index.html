@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-typeahead.css">
+  <style type="text/css">
+    .example {
+      padding: 15px;
+      border: 1px solid #CCC;
+      border-radius: 2px;
+      height: 300px;
+    }
+  </style>
+  <script type="text/javascript" src="lib/jquery.js"></script>
+  <script type="text/javascript" src="lib/knockout.js"></script>
+  <script type="text/javascript" src="lib/bootstrap-typeahead.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="col-xs-12">
+      <div class="example">
+        <form role="form">
+          <div class="form-group">
+            <label for="typeahead">Type Here</label>
+            <input id="typeahead" type="text" class="form-control" placeholder="Search" tabindex="-1" data-bind="
+              value: item().name,
+              dropdown: {
+                suggestions: items,
+                query: query,
+                select: select
+              }">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
