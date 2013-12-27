@@ -26,8 +26,8 @@
           <div class="form-group">
             <label for="typeahead">Type Here</label>
             <input id="typeahead" type="text" class="form-control" placeholder="Search" tabindex="-1" data-bind="
-              value: suggestion().name,
               dropdown: {
+                suggestion: suggestion,
                 query: query,
                 select: select
               }">

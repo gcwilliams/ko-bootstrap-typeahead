@@ -68,7 +68,7 @@ module.exports = (grunt) ->
       options:
         cwd: "src/"
       files: ["coffee/**", "js/**", "lib/**", "css/**", "templates/**", "host.html"]
-      tasks: ["default"]
+      tasks: ["dev"]
 
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-copy"

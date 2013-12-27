@@ -25,6 +25,8 @@ define \
         openTypeAhead = ->
           open = true
 
+          config.suggestion ""
+
           $dropdown = $(".dropdown", $parent)
           $dropdown.addClass "open"
 
@@ -32,7 +34,7 @@ define \
             $dropdown.removeClass "open"
             open = false
 
-          config.query($(element).val())
+          config.query $(element).val()
 
         onFocus = ->
           if not open
@@ -79,7 +81,9 @@ define \
               if open
                 $selected = $ "li.selected > a", $parent
                 if $selected.length
-                  config.select ko.dataFor $selected.get 0
+                  data = ko.dataFor $selected.get 0
+                  config.select data
+                  $el.val data.name
                   disposer()
             when constants.Keys.ESC
               if open
@@ -88,11 +92,13 @@ define \
               if not open
                 openTypeAhead()
               clearTimeout throttleTimeout
-              throttleTimeout = setTimeout (-> config.query($(element).val())), 200
+              throttleTimeout = setTimeout (-> config.query $(element).val()), 200
 
         onClickItem = (e) ->
           cancelEvent e
-          config.select ko.dataFor e.toElement
+          data = ko.dataFor e.toElement
+          $el.val data.name
+          config.select data
           disposer()
 
         onMouseOverItem = (e) ->
@@ -101,6 +107,10 @@ define \
           if data isnt bindingContext.$data
             $("li", $parent).removeClass "selected"
             $(e.toElement).parent().addClass "selected"
+
+        onChange = (e) ->
+          selected = config.suggestion()
+          config.select $el.val() if not selected
 
         # cache element and parent
         $el = $ element
@@ -114,6 +124,7 @@ define \
         $el.bind "keyup", onKeyUp
         $el.bind "keypress", onKeyPress
         $el.bind "keydown", onKeyDown
+        $el.bind "change", onChange
         $menu.bind "click", onClickItem
         $menu.bind "mouseover", onMouseOverItem
 
@@ -124,6 +135,7 @@ define \
           $el.unbind onKeyUp
           $el.unbind onKeyPress
           $el.unbind onKeyDown
+          $el.unbind onChange
           $menu.unbind onClickItem
           $menu.unbind onMouseOverItem
 

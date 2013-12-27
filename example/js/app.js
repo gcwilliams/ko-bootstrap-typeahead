@@ -6,23 +6,22 @@ $(function() {
 
   // a dummy service used in the example
   service = (function() {
+
+    var data = [
+      new Item("One"),
+      new Item("Two"),
+      new Item("Three"),
+      new Item("Four"),
+      new Item("Five"),
+      new Item("Six")
+    ];
+
     function Item(name) {
       this.name = name;
     }
 
     function query(term) {
-
       return $.Deferred(function(deferred) {
-
-        var data = [
-          new Item("One"),
-          new Item("Two"),
-          new Item("Three"),
-          new Item("Four"),
-          new Item("Five"),
-          new Item("Six")
-        ];
-
         setTimeout(function() {
           deferred.resolve(data.filter(function(item) {
             return !!~item.name.indexOf(term);
