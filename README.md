@@ -27,21 +27,22 @@ Knockout model
 
 ```
 var model = {
-    loading: ko.observable(false), // true to show 'Loading...'
-    suggestion: ko.observable(""), // the selected suggestion
-    suggestions: ko.observableArray([]), // the selections available
-    query: function(term) { // the function called to get more data
-      model.loading(true);
-      service.query(term).then(function(data) {
-        model.loading(false);
-        model.suggestions(data);
-      });
-    },
-    select: function(selected) { // the function called when a suggestion is selected
-      model.suggestions([]);
-      model.suggestion(selected);
-    }
-  };
+  loading: ko.observable(false), // true to show 'Loading...'
+  suggestion: ko.observable(""), // the selected suggestion
+  suggestions: ko.observableArray([]), // the selections available
+  query: function(term) { // the function called to get more data
+    model.loading(true);
+    service.query(term).then(function(data) {
+      model.loading(false);
+      model.suggestions(data);
+    });
+  },
+  
+};
+
+mode.suggestion.subscribe(function() { // the function called when a suggestion is selected to clear the suggestions
+  model.suggestions([]);
+})
 ```
 
 See `example` folder for a page using the typeahead.
