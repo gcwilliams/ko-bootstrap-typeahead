@@ -35,7 +35,7 @@ var model = {
       model.loading(false);
       model.suggestions(data);
     });
-  },
+  }
 };
 
 mode.suggestion.subscribe(function() { // the function called when a suggestion is selected to clear the suggestions
