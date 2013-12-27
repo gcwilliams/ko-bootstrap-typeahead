@@ -1,4 +1,4 @@
-# Knockout / Bootstrap TypeAhead
+  # Knockout / Bootstrap TypeAhead
 
 A simple knockout type-ahead using bootstrap 3.
 
@@ -15,8 +15,8 @@ Knockout binding
 
 ```
 data-bind="
-  value: suggestions().name, // the observable bound to the selected value
    dropdown: {
+    value: suggestion, // the observable bound to the selected value
     query: query, // the function called to get more data
     select: select // the function called when an item is selected
   }"
