@@ -16,7 +16,7 @@ Knockout binding
 ```
 data-bind="
    dropdown: {
-    value: suggestion, // the observable bound to the selected value
+    suggestion: suggestion, // the observable bound to the selected value
     query: query, // the function called to get more data
     select: select // the function called when an item is selected
   }"
@@ -37,7 +37,6 @@ var model = {
       model.suggestions(data);
     });
   },
-  
 };
 
 mode.suggestion.subscribe(function() { // the function called when a suggestion is selected to clear the suggestions
