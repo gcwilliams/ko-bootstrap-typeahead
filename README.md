@@ -17,7 +17,7 @@ Knockout binding
 data-bind="
    dropdown: {
     suggestion: suggestion, // the observable bound to the selected value
-    query: query, // the function called to get more data
+    query: query // the function called to get more data
   }"
 
 ```
