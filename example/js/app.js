@@ -45,12 +45,12 @@ $(function() {
         model.loading(false);
         model.suggestions(data);
       });
-    },
-    select: function(selected) { // called when an suggestion is selected
-      model.suggestions([]);
-      model.suggestion(selected);
     }
   };
+
+  model.suggestion.subscribe(function() { // called when an suggestion is selected to clear the suggestions
+    model.suggestions([]);
+  });
 
   ko.applyBindings(model);
 });

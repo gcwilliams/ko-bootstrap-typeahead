@@ -18,8 +18,8 @@ require \
         service.query(term).done (data) ->
           model.loading false
           model.suggestions data
-      select: (selected) ->
-        model.suggestions []
-        model.suggestion selected
+
+    model.suggestion.subscribe ->
+      model.suggestions []
 
     ko.applyBindings model

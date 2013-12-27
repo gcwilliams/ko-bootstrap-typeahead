@@ -82,7 +82,7 @@ define \
                 $selected = $ "li.selected > a", $parent
                 if $selected.length
                   data = ko.dataFor $selected.get 0
-                  config.select data
+                  config.suggestion data
                   $el.val data.name
                   disposer()
             when constants.Keys.ESC
@@ -98,7 +98,7 @@ define \
           cancelEvent e
           data = ko.dataFor e.toElement
           $el.val data.name
-          config.select data
+          config.suggestion data
           disposer()
 
         onMouseOverItem = (e) ->
@@ -110,7 +110,7 @@ define \
 
         onChange = (e) ->
           selected = config.suggestion()
-          config.select $el.val() if not selected
+          config.suggestion $el.val() if not selected
 
         # cache element and parent
         $el = $ element
